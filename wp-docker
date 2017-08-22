@@ -1,0 +1,113 @@
+#!/bin/bash
+# This handy script helps you to create and run a WordPress Docker container
+# Version: 2.2
+# Author: Eugenio Petulla'
+# Author url: https://skillsandmore.org
+
+echo Welcome to the WordPress Docker Local Environment setup widzard
+
+read -p 'Project Name: ' PROJECT_NAME
+read -sp 'DB Password: ' MYSQL_PASS
+
+if [[ ${#MYSQL_PASS} -ge 6 && "$MYSQL_PASS" == *[A-Z]* && "$MYSQL_PASS" == *[a-z]* && "$MYSQL_PASS" == *[0-9]* ]]; then
+    echo "Password Matches the criteria"
+else
+    echo "Password criteria: Password should be at least 6 characters long with one digit and one Upper case Alphabet"
+    echo "Password does not Match the criteria, exiting..."
+    exit
+fi
+
+while [[ "$ENABLE_PHP_MY_ADMIN" != "y" && "$ENABLE_PHP_MY_ADMIN" != "n" ]]; do
+    read -p 'Enable PHPMyAdmin (y/n): ' ENABLE_PHP_MY_ADMIN
+done
+
+while [[ "$ENABLE_WORDMOVE" != "y" && "$ENABLE_WORDMOVE" != "n" ]]; do
+    read -p 'Enable WordMove (y/n): ' ENABLE_WORDMOVE
+done
+
+if [ "$ENABLE_WORDMOVE" == "y" ]; then
+	WORDMOVE="wordmove:
+    tty: true
+    depends_on:
+      - wordpress
+    image: mfuezesi/wordmove
+    restart: on-failure:5
+    volumes:
+      - ./config:/home
+      - ./public:/var/www/html
+      - ~/.ssh:/root/.ssh"
+fi
+
+if [ "$ENABLE_PHP_MY_ADMIN" == "y" ]; then
+  PHP_MY_ADMIN="phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8082:80"
+    links:
+      - mariadb:mysql
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: $MYSQL_PASS
+      PMA_HOST: mysql"
+fi
+
+mkdir "$PROJECT_NAME" && cd "$PROJECT_NAME" && touch docker-compose.yml
+
+cat > docker-compose.yml <<EOL
+version: "2"
+services:
+  mariadb:
+    image: mariadb
+    ports:
+      - "8081:3306"
+    restart: on-failure:5
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_PASS
+  wordpress:
+    image: wordpress
+    volumes:
+      - ./public:/var/www/html
+    ports:
+      - "8080:80"
+    restart: on-failure:5
+    links:
+      - mariadb:mysql
+    environment:
+      WORDPRESS_DB_PASSWORD: $MYSQL_PASS
+  $PHP_MY_ADMIN
+  $WORDMOVE
+EOL
+
+docker-compose up -d
+
+if [ "$ENABLE_WORDMOVE" == "y" ]; then
+  touch config/Movefile
+
+  cat > config/Movefile <<EOL
+  local:
+    vhost: "http://0.0.0.0:8080"
+    wordpress_path: "/var/www/html/"
+    database:
+      name: "wordpress"
+      user: "root"
+      password: "$MYSQL_PASS"
+      host: "mariadb"
+      charset: "utf8"
+
+  production:
+    vhost: "<your_domain_name>"
+    wordpress_path: "<absolute_path_to_wp_installation>" 
+
+    database:
+        name: "<db_name>"
+        user: "<username>"
+        password: "<password>"
+        host: "localhost"
+        charset: "utf8"
+    ssh:
+        host: "<hostname>"
+        user: "<user>"
+  #      password: "<password>" 
+  # password is optional, will use public keys if available.
+EOL
+fi

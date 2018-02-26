@@ -61,8 +61,8 @@ You can find more information on [WordMove usage here](https://github.com/welaik
 
 ## Changelog
 
-3.0 - Switch to an updated WordMove container
-2.2 - Add default Movefile
-2.1 - Add WordMove container
-2.0 - Reorder folders
-1.0 - First release
+- 3.0: Switch to an updated WordMove container
+- 2.2: Add default Movefile
+- 2.1: Add WordMove container
+- 2.0: Reorder folders
+- 1.0: First release

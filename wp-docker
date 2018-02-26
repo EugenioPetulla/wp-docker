@@ -84,6 +84,9 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
   touch config/Movefile
 
   cat > config/Movefile <<EOL
+  global:
+    sql_adapter: "default"
+
   local:
     vhost: "http://0.0.0.0:8080"
     wordpress_path: "/var/www/html/"

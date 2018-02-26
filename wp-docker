@@ -1,6 +1,6 @@
 #!/bin/bash
 # This handy script helps you to create and run a WordPress Docker container
-# Version: 2.2
+# Version: 3.0
 # Author: Eugenio Petulla'
 # Author url: https://skillsandmore.org
 
@@ -30,7 +30,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
     tty: true
     depends_on:
       - wordpress
-    image: mfuezesi/wordmove
+    image: simonbland/wordmove
     restart: on-failure:5
     volumes:
       - ./config:/home

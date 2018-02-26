@@ -24,7 +24,7 @@ Actually this is just a script I made in order to make the process of creating a
 
 [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/), optional web interface for MySQL and MariaDB
 
-[WordMove](https://hub.docker.com/r/mfuezesi/wordmove/), optional tool for online deploy that runs in its own separated container.
+[WordMove](https://hub.docker.com/r/simonbland/wordmove/), optional tool for online deploy that runs in its own separated container.
 
 ## How-to
 
@@ -58,3 +58,11 @@ In order to access to WordMove container and execute its command you have to fin
 If your production ssh requires authentication through password you will need `sshpass` so after you get access to WordMove bash just install it using the apt package manager `apt-get install sshpass`.
 
 You can find more information on [WordMove usage here](https://github.com/welaika/wordmove/wiki/Usage-and-flags-explained) on the official documentation.
+
+## Changelog
+
+3.0 - Switch to an updated WordMove container
+2.2 - Add default Movefile
+2.1 - Add WordMove container
+2.0 - Reorder folders
+1.0 - First release

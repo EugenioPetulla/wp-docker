@@ -33,7 +33,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
     image: welaika/wordmove
     restart: on-failure:5
     volumes:
-      - ./config:/home
+      - ./config:/home/wordmove
       - ./public:/var/www/html
       - ~/.ssh:/root/.ssh"
 fi

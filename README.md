@@ -24,7 +24,7 @@ Actually this is just a script I made in order to make the process of creating a
 
 [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/), optional web interface for MySQL and MariaDB
 
-[WordMove](https://hub.docker.com/r/simonbland/wordmove/), optional tool for online deploy that runs in its own separated container.
+[WordMove](https://hub.docker.com/r/welaika/wordmove/), optional tool for online deploy that runs in its own separated container.
 
 ## How-to
 
@@ -61,6 +61,7 @@ You can find more information on [WordMove usage here](https://github.com/welaik
 
 ## Changelog
 
+- 3.1: Switch to the official welaika/wordmove container
 - 3.0: Switch to an updated WordMove container
 - 2.2: Add default Movefile
 - 2.1: Add WordMove container

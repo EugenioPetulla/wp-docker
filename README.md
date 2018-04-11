@@ -55,12 +55,11 @@ You can find the movefile in the config folder under the root of your project. E
 
 In order to access to WordMove container and execute its command you have to find the name of the container and then prompt `docker exec -it your_project_wordmove /bin/bash`.
 
-If your production ssh requires authentication through password you will need `sshpass` so after you get access to WordMove bash just install it using the apt package manager `apt-get install sshpass`.
-
 You can find more information on [WordMove usage here](https://github.com/welaika/wordmove/wiki/Usage-and-flags-explained) on the official documentation.
 
 ## Changelog
 
+- 3.2: Better folder mapping avoids to be root when using SSH keys with wordmove
 - 3.1: Switch to the official welaika/wordmove container
 - 3.0: Switch to an updated WordMove container
 - 2.2: Add default Movefile

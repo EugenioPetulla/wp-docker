@@ -32,6 +32,12 @@ Actually this is just a script I made in order to make the process of creating a
 
 Place the script in `/usr/local/bin` folder or execute it directly, it's a simple bash script!!
 
+```bash
+  curl https://raw.githubusercontent.com/EugenioPetulla/wp-docker/master/wp-docker -o /usr/local/bin/wp-docker
+  chmod +x /usr/local/bin/wp-docker
+```
+
+
 When you run the script it asks you for a project unique name and it will create a folder with the same name. Inside it you can find a `docker-compose.yml` file and a `public` folder that coincides with the root folder of your webserver containing all the WordPress files and directories.
 
 After the setup is completed you can simply point your browser to the desired container. They are mapped like this:

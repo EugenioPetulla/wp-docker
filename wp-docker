@@ -1,6 +1,6 @@
 #!/bin/bash
 # This handy script helps you to create and run a WordPress Docker container
-# Version: 3.2
+# Version: 3.3
 # Author: Eugenio Petulla'
 # Author url: https://skillsandmore.org
 
@@ -30,10 +30,12 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
     tty: true
     depends_on:
       - wordpress
+    links:
+      - mariadb:mysql
     image: welaika/wordmove
     restart: on-failure:5
     volumes:
-      - ./config:/home/wordmove
+      - ./public:/home/wordmove
       - ./public:/var/www/html
       - ~/.ssh:/home/wordmove/.ssh"
 fi
@@ -81,11 +83,11 @@ EOL
 docker-compose up -d
 
 if [ "$ENABLE_WORDMOVE" == "y" ]; then
-  touch config/Movefile
+  touch public/movefile.yml
 
-  cat > config/Movefile <<EOL
+  cat > public/movefile.yml <<EOL
   global:
-    sql_adapter: "default"
+    sql_adapter: "wpcli"
 
   local:
     vhost: "http://0.0.0.0:8080"
@@ -99,7 +101,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
 
   production:
     vhost: "<your_domain_name>"
-    wordpress_path: "<absolute_path_to_wp_installation>" 
+    wordpress_path: "<absolute_path_to_wp_installation>"
 
     database:
         name: "<db_name>"
@@ -110,7 +112,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
     ssh:
         host: "<hostname>"
         user: "<user>"
-  #      password: "<password>" 
+  #      password: "<password>"
   # password is optional, will use public keys if available.
 EOL
 fi

@@ -35,9 +35,8 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
     image: welaika/wordmove:php7
     restart: on-failure:5
     volumes:
-      - ./public:/home/wordmove
       - ./public:/var/www/html
-      - ~/.ssh:/home/wordmove/.ssh"
+      - ~/.ssh:/root/.ssh"
 fi
 
 if [ "$ENABLE_PHP_MY_ADMIN" == "y" ]; then

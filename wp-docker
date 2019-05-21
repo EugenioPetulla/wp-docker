@@ -32,7 +32,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
       - wordpress
     links:
       - mariadb:mysql
-    image: welaika/wordmove
+    image: welaika/wordmove:php7
     restart: on-failure:5
     volumes:
       - ./public:/home/wordmove

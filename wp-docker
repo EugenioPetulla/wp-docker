@@ -90,7 +90,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
 
   local:
     vhost: "http://0.0.0.0:8080"
-    wordpress_path: "/var/www/html/"
+    wordpress_path: "<%= ENV['WORDMOVE_WORKDIR'] %>"
     database:
       name: "wordpress"
       user: "root"

@@ -32,12 +32,11 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
       - wordpress
     links:
       - mariadb:mysql
-    image: welaika/wordmove
+    image: welaika/wordmove:php7
     restart: on-failure:5
     volumes:
-      - ./public:/home/wordmove
-      - ./public:/var/www/html
-      - ~/.ssh:/home/wordmove/.ssh"
+      - ./public:/html
+      - ~/.ssh:/root/.ssh"
 fi
 
 if [ "$ENABLE_PHP_MY_ADMIN" == "y" ]; then
@@ -91,7 +90,7 @@ if [ "$ENABLE_WORDMOVE" == "y" ]; then
 
   local:
     vhost: "http://0.0.0.0:8080"
-    wordpress_path: "/var/www/html/"
+    wordpress_path: "<%= ENV['WORDMOVE_WORKDIR'] %>"
     database:
       name: "wordpress"
       user: "root"
